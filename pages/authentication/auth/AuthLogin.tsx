@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Typography,
@@ -5,10 +6,9 @@ import {
   Stack,
   CircularProgress
 } from "@mui/material";
-
 import CustomTextField from "@src/components/forms/theme-elements/CustomTextField";
-
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import { useForm, UseFormRegister, FieldErrors } from "react-hook-form";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
 interface FormData {
   email: string;
@@ -19,9 +19,7 @@ interface loginType {
   title?: string;
   subtitle?: JSX.Element | JSX.Element[];
   subtext?: JSX.Element | JSX.Element[];
-  register: UseFormRegister<FormData>;
   onSubmit: (data: FormData) => Promise<void>;
-  errors: FieldErrors<FormData>;
   loading: boolean;
 }
 
@@ -29,24 +27,17 @@ const AuthLogin = ({
   title,
   subtitle,
   subtext,
-  register,
   onSubmit,
-  errors,
   loading
 }: loginType) => {
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const data = {
-      email: (form.elements.namedItem("email") as HTMLInputElement)?.value,
-      password: (form.elements.namedItem("password") as HTMLInputElement)?.value
-    };
-    await onSubmit(data);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>();
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {title ? (
         <Typography fontWeight="700" variant="h2" mb={1}>
           {title}

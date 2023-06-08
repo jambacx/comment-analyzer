@@ -18,9 +18,6 @@ const theme = createTheme({
     secondary: {
       main: '#19857b',
     },
-    customColors: {
-      main: '#556cd6',
-    },
     error: {
       main: red.A400,
     },

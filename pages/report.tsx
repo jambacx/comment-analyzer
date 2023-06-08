@@ -22,7 +22,7 @@ import moment from "moment";
 import FullLayout from "../src/layouts/full/FullLayout";
 import DashboardCard from "../src/components/shared/DashboardCard";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
-import { TablesHead } from "./sub-components/ReportHead";
+import TablesHead from "./sub-components/ReportHead";
 import { useReportFetcher } from "@services/hooks/useReport";
 
 function ReportsComponent() {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import HTTP, { RequestConfig } from '../http';
+import HTTP, { } from '../http';
 
 interface FetcherResult<T> {
     data: T | null;
@@ -7,7 +7,7 @@ interface FetcherResult<T> {
     loading: boolean;
 }
 
-const useFetcher = <T>(url: string, options?: RequestConfig): FetcherResult<T> => {
+const useFetcher = <T>(url: string, options?: any): FetcherResult<T> => {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<any>(null);
     const [loading, setLoading] = useState(false);

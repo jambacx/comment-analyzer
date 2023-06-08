@@ -21,9 +21,7 @@ import FullLayout from "../src/layouts/full/FullLayout";
 import DashboardCard from "../src/components/shared/DashboardCard";
 import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import { usePostFetcher } from "@services/hooks/usePosts";
-import { TablesHead } from "./sub-components/PostHead";
-import { ReactDatePickerProps } from "react-datepicker";
-
+import TablesHead from "./sub-components/PostHead";
 import LoadingBar from "react-top-loading-bar";
 import PickersRange from "./sub-components/PickersRange";
 import requireAuth from "@components/auth/requireAuth";

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import HTTP, { RequestConfig } from './http';
+import HTTP from './http';
 
 export type FetcherOptions = {
     url: string,
-    options?: RequestConfig,
+    options?: any,
     method?: 'get' | 'post' | 'put',
 };
 

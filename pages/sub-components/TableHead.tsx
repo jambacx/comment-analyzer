@@ -44,3 +44,5 @@ export const TablesHead = () => {
     </TableHead>
   );
 };
+
+export default TablesHead;

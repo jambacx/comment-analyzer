@@ -82,8 +82,8 @@ const Login2 = () => {
               <AuthLogin
                 loading={status === "pending"}
                 onSubmit={onSubmit}
-                register={register}
-                errors={errors}
+                // register={register}
+                // errors={errors}
               />
             </Card>
           </Grid>

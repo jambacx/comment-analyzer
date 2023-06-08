@@ -6,7 +6,7 @@ interface FormData {
   password: string;
 }
 
-export const TablesHead = () => {
+export const PostHead = () => {
   return (
     <TableHead>
       <TableRow>
@@ -39,3 +39,5 @@ export const TablesHead = () => {
     </TableHead>
   );
 };
+
+export default PostHead;
