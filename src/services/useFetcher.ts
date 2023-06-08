@@ -27,7 +27,7 @@ export function useFetcher(): UseFetcherReturn {
     }: FetcherOptions) => {
         setError(null);
         setStatus("pending");
-
+        console.log("options: ", options);
         try {
             let _response;
             if (method === "get") {

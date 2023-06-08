@@ -15,6 +15,7 @@ import { IconSwitch2, IconUser } from "@tabler/icons-react";
 import router from "next/router";
 import { setToken } from "@src/redux/authSlice";
 import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem("access_token");
+    Cookies.remove("access_token");
     dispatch(setToken(null));
     router.push("/authentication/login");
   };
@@ -49,7 +50,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src="/images/profile/avatar.png"
+          src="/images/profile/avatar.jpg"
           alt="image"
           sx={{
             width: 50,

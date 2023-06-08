@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import Cookies from "js-cookie";
 
 namespace HTTP {
   interface RequestConfig extends AxiosRequestConfig<Record<string, any>> {
@@ -20,7 +21,8 @@ namespace HTTP {
 
   instance.interceptors.request.use(config => {
     if (config) {
-      const accessToken = localStorage.getItem("access_token");
+      const accessToken = Cookies.get("access_token");
+
       if (accessToken) {
         config.headers["access-token"] = accessToken;
         config.headers["Authorization"] = `Bearer ${accessToken}`;

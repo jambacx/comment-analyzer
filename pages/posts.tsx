@@ -9,10 +9,9 @@ import {
   Tooltip,
   Typography,
   IconButton,
-  LinearProgress,
-  CircularProgress
+  CircularProgress,
+  LinearProgress
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Pagination from "@mui/material/Pagination";
@@ -33,7 +32,7 @@ function PostsComponent() {
 
   useEffect(() => {
     list({
-      page: 1,
+      page: page,
       page_id: "105701022801307",
       limit: 15,
       category: "default",
@@ -56,6 +55,7 @@ function PostsComponent() {
           marginTop: "200px"
         }}
       >
+        <LinearProgress />
         <CircularProgress />
       </Box>
     );
@@ -107,16 +107,25 @@ function PostsComponent() {
                       >
                         <Box>
                           <Tooltip title={post.id}>
-                            <Typography
-                              color="text"
+                            <Link
+                              underline="none"
+                              href={`/posts/${post?.id}`}
                               sx={{
-                                fontSize: "13px"
+                                fontSize: "13px",
+                                fontWeight: "500"
                               }}
                             >
-                              {post?.message?.length > 100
-                                ? `${post?.message?.substring(0, 100)}...`
-                                : post?.message}
-                            </Typography>
+                              <Typography
+                                color="textSecondary"
+                                sx={{
+                                  fontSize: "13px"
+                                }}
+                              >
+                                {post?.message?.length > 100
+                                  ? `${post?.message?.substring(0, 100)}...`
+                                  : post?.message}
+                              </Typography>
+                            </Link>
                           </Tooltip>
                         </Box>
                       </Box>
@@ -197,3 +206,18 @@ PostsComponent.getLayout = function getLayout(page: ReactElement) {
 const Posts = requireAuth(PostsComponent);
 
 export default Posts;
+
+export async function getServerSideProps(context: any) {
+  const token = context.req.cookies["access_token"];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false
+      }
+    };
+  }
+
+  return { props: {} };
+}

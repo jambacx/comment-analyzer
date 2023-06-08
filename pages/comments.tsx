@@ -32,13 +32,13 @@ function CommentsComponent() {
 
   useEffect(() => {
     list({
-      page: 1,
+      page: page,
       page_id: "105701022801307",
       limit: 100,
       category: "default",
       date_range: ["2023-03-1", "2023-03-21"]
     });
-  }, []);
+  }, [page]);
 
   const { comments = [] } = response || {};
   const { pagination = [] } = response || {};
@@ -77,10 +77,6 @@ function CommentsComponent() {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
-  const pageCount = Number.isFinite(pagination?.total)
-    ? Math.ceil(pagination.total / 15)
-    : 0;
 
   return (
     <DashboardCard title="Сэтгэгдэлүүд">
@@ -198,9 +194,6 @@ function CommentsComponent() {
                         <FacebookIcon />
                       </a>
                     </IconButton>
-                    <IconButton color="secondary">
-                      <HistoryRoundedIcon />
-                    </IconButton>
                   </Box>
                 </TableCell>
               </TableRow>
@@ -231,3 +224,18 @@ CommentsComponent.getLayout = function getLayout(page: ReactElement) {
 
 const Comments = requireAuth(CommentsComponent);
 export default Comments;
+
+export async function getServerSideProps(context: any) {
+  const token = context.req.cookies["access_token"];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false
+      }
+    };
+  }
+
+  return { props: {} };
+}

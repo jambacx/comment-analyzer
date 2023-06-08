@@ -8,6 +8,7 @@ export function usePostFetcher() {
         error,
         response,
         list: async (options: any) => {
+            // console.log("options: ", options);
             fetcher({
                 options,
                 method: "post",

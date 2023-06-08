@@ -1,11 +1,11 @@
-import { useEffect, type ReactElement, useLayoutEffect } from "react";
+import { useEffect, type ReactElement } from "react";
 import { Box, Container, Typography, Button } from "@mui/material";
 import Link from "next/link";
 import BlankLayout from "../src/layouts/blank/BlankLayout";
 import router from "next/router";
 
 const Error = () => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     router.replace("/authentication/login");
   }, []);
   return (

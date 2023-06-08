@@ -153,3 +153,18 @@ ConfigsComponent.getLayout = function getLayout(page: ReactElement) {
 const Configs = requireAuth(ConfigsComponent);
 
 export default Configs;
+
+export async function getServerSideProps(context: any) {
+  const token = context.req.cookies["access_token"];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false
+      }
+    };
+  }
+
+  return { props: {} };
+}

@@ -1,6 +1,7 @@
 import { RootState } from "@src/redux/store";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { useEffect, ComponentType } from "react";
+import { useEffect, ComponentType, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 function requireAuth(
@@ -10,15 +11,21 @@ function requireAuth(
     const router = useRouter();
     const dispatch = useDispatch();
     const userToken = useSelector((state: RootState) => state?.auth?.token);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-      const token = window.localStorage.getItem("access_token");
+      const accessToken = Cookies.get("access_token");
 
-      if (!token) {
-        console.log("ok");
+      if (!accessToken) {
         router.replace("/authentication/login");
+      } else {
+        setLoading(false);
       }
     }, [router]);
+
+    if (loading) {
+      return null;
+    }
 
     return <WrappedComponent {...props} />;
   };

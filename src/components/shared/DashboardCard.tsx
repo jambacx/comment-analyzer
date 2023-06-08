@@ -1,7 +1,17 @@
 import React from "react";
-import { Card, CardContent, Typography, Stack, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  Box,
+  IconButton
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useRouter } from "next/router";
 
 type Props = {
+  hasBack?: boolean;
   title?: string;
   subtitle?: string;
   action?: JSX.Element | any;
@@ -14,6 +24,7 @@ type Props = {
 };
 
 const DashboardCard = ({
+  hasBack = false,
   title,
   subtitle,
   children,
@@ -22,8 +33,14 @@ const DashboardCard = ({
   cardheading,
   headtitle,
   headsubtitle,
-  middlecontent,
+  middlecontent
 }: Props) => {
+  const router = useRouter();
+
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <Card sx={{ padding: 0 }} elevation={9} variant={undefined}>
       {cardheading ? (
@@ -43,16 +60,23 @@ const DashboardCard = ({
               alignItems={"center"}
               mb={3}
             >
-              <Box>
-                {title ? <Typography variant="h5">{title}</Typography> : ""}
-
-                {subtitle ? (
-                  <Typography variant="subtitle2" color="textSecondary">
-                    {subtitle}
-                  </Typography>
-                ) : (
-                  ""
+              <Box display="flex" alignItems="center">
+                {hasBack && (
+                  <IconButton onClick={handleBack} sx={{ marginRight: "8px" }}>
+                    <ArrowBackIcon />
+                  </IconButton>
                 )}
+                <Box>
+                  {title ? <Typography variant="h5">{title}</Typography> : ""}
+
+                  {subtitle ? (
+                    <Typography variant="subtitle2" color="textSecondary">
+                      {subtitle}
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+                </Box>
               </Box>
               {action}
             </Stack>

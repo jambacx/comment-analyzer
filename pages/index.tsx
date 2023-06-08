@@ -1,10 +1,9 @@
-import { useEffect, useState, type ReactElement } from "react";
+import { useEffect, useState } from "react";
 import { Grid, Box, CircularProgress, LinearProgress } from "@mui/material";
 import PageContainer from "../src/components/container/PageContainer";
 import SalesOverview from "@src/components/dashboard/SalesOverview";
 import SocialCount from "@src/components/dashboard/SocialCount";
 import FullLayout from "@src/layouts/full/FullLayout";
-import requireAuth from "@components/auth/requireAuth";
 import { useDashboardFetcher } from "@services/hooks/useDashboard";
 
 function HomeComponent() {
@@ -18,11 +17,6 @@ function HomeComponent() {
       page_id: "105701022801307",
       date_range: [`2023-${month}-01`, `2023-${month}-31`]
     });
-    // getGraph({
-    //   type: "monthly",
-    //   page_id: "105701022801307",
-    //   date_range: [`2023-${month}-01`, `2023-${month}-31`]
-    // });
   }, []);
 
   const { data = {} } = response || {};
@@ -70,9 +64,23 @@ function HomeComponent() {
   );
 }
 
-HomeComponent.getLayout = function getLayout(page: ReactElement) {
+HomeComponent.getLayout = function getLayout(page: any) {
   return <FullLayout>{page}</FullLayout>;
 };
 
-const Home = requireAuth(HomeComponent);
-export default Home;
+export default HomeComponent;
+
+export async function getServerSideProps(context: any) {
+  const token = context.req.cookies["access_token"];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false
+      }
+    };
+  }
+
+  return { props: {} };
+}

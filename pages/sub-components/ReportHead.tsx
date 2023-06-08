@@ -37,7 +37,7 @@ export const ReportHead = () => {
         </TableCell>
         <TableCell align="center">
           <Typography variant="subtitle2" fontWeight={600}>
-            Share
+            Date
           </Typography>
         </TableCell>
       </TableRow>

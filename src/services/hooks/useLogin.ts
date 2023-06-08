@@ -3,6 +3,7 @@ import { useFetcher } from '../useFetcher';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setToken } from "@src/redux/authSlice";
+import Cookies from 'js-cookie';
 
 interface LoginData {
     email: string;
@@ -26,7 +27,7 @@ export function useLogin() {
         if (status === "done" && !error && response) {
             if (response?.data) {
                 const token = response?.data?.token;
-                localStorage.setItem("access_token", token);
+                Cookies.set("access_token", token, { expires: 7 });
                 dispatch(setToken(token))
             }
             router.push('/');

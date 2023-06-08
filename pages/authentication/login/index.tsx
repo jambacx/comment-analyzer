@@ -8,6 +8,7 @@ import AuthLogin from "../auth/AuthLogin";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useLogin } from "@services/hooks/useLogin";
+import Cookies from "js-cookie";
 
 interface FormData {
   email: string;
@@ -30,7 +31,7 @@ const Login2 = () => {
     if (response?.data) {
       if (response.data.token) {
         const token = response?.data?.token;
-        localStorage.setItem("access_token", token);
+        Cookies.set("access_token", token, { expires: 7 });
       }
     } else if (response) {
       const errorMessage = response.error || "An unexpected error occurred";
@@ -79,12 +80,7 @@ const Login2 = () => {
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Logo />
               </Box>
-              <AuthLogin
-                loading={status === "pending"}
-                onSubmit={onSubmit}
-                // register={register}
-                // errors={errors}
-              />
+              <AuthLogin loading={status === "pending"} onSubmit={onSubmit} />
             </Card>
           </Grid>
         </Grid>

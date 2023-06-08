@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from "react";
+import { useEffect, type ReactElement, type ReactNode } from "react";
 
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -11,7 +11,7 @@ import { baselightTheme } from "../src/theme/DefaultColors";
 import store from "@src/redux/store";
 import dotenv from "dotenv";
 import { Provider } from "react-redux";
-import AuthGuard from "@components/auth/AuthGuard";
+import { useRouter } from "next/router";
 
 const clientSideEmotionCache = createEmotionCache();
 

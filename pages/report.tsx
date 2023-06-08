@@ -9,7 +9,7 @@ import {
   Tooltip,
   Typography,
   IconButton,
-  LinearProgress
+  CircularProgress
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import Tab from "@mui/material/Tab";
@@ -21,7 +21,6 @@ import requireAuth from "@components/auth/requireAuth";
 import moment from "moment";
 import FullLayout from "../src/layouts/full/FullLayout";
 import DashboardCard from "../src/components/shared/DashboardCard";
-import HistoryRoundedIcon from "@mui/icons-material/HistoryRounded";
 import TablesHead from "./sub-components/ReportHead";
 import { useReportFetcher } from "@services/hooks/useReport";
 
@@ -43,17 +42,21 @@ function ReportsComponent() {
 
   if (status === "pending")
     return (
-      <Box sx={{ width: "100%" }}>
-        {status === "pending" && <LinearProgress />}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+          height: "100%",
+          marginTop: "200px"
+        }}
+      >
+        <CircularProgress />
       </Box>
     );
 
   const checkLabel = (percentage: number) => {
-    // if (percentage > 90) {
-    //   return "lightGreen";
-    // } else if (percentage < 60) {
-    //   return "red";
-    // }
     return "textSecondary";
   };
 
@@ -67,7 +70,7 @@ function ReportsComponent() {
         <TabContext value={value}>
           <TabList onChange={handleChange} aria-label="simple tabs example">
             <Tab value="1" label="Нийтлэлүүд" />
-            <Tab value="2" label="Сэтгэгдлүүд" />
+            {/* <Tab value="2" label="Сэтгэгдлүүд" /> */}
           </TabList>
 
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -317,9 +320,7 @@ function ReportsComponent() {
                             fontSize: "13px"
                           }}
                         >
-                          {moment
-                            .unix(report.created_time)
-                            .format("MM/DD/YYYY")}
+                          {report?.share_count}
                         </Typography>
                       </TableCell>
                       <TableCell>
@@ -358,3 +359,18 @@ ReportsComponent.getLayout = function getLayout(page: ReactElement) {
 const Reports = requireAuth(ReportsComponent);
 
 export default Reports;
+
+export async function getServerSideProps(context: any) {
+  const token = context.req.cookies["access_token"];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/authentication/login",
+        permanent: false
+      }
+    };
+  }
+
+  return { props: {} };
+}

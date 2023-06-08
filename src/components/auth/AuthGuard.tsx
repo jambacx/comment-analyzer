@@ -4,6 +4,7 @@ import { RootState } from "@src/redux/store";
 
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -13,14 +14,12 @@ interface AuthGuardProps {
 const AuthGuard = (props: any) => {
   const { children } = props;
   const router = useRouter();
-  const [localStorageToken, setLocalStorageToken] = useState<string | null>(
-    null
-  );
+  const [localStorageToken, setLocalStorageToken] = useState<any>(null);
 
   const userToken = useSelector((state: RootState) => state?.auth?.token);
 
   useEffect(() => {
-    const token = window.localStorage.getItem("access_token");
+    const token = Cookies.get("access_token");
 
     setLocalStorageToken(token);
 
